@@ -50,7 +50,7 @@ const updateFeed = catchAsync(async (req, res) => {
   delFile(file2);
 
   // TODO : Call Store Procedure from feed service
-  feedService.createTable(unzipedFile1, unzipedFile2);
+  // feedService.createTable(unzipedFile1, unzipedFile2);
 
   res.json({
     success: "success",

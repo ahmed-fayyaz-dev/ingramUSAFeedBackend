@@ -7,16 +7,16 @@ const sqlConfig = require("./config/sqlConfig");
 
 let server;
 
-(async () => {
-  try {
-    console.log("Connection sql ...");
-    server = await sql.connect(sqlConfig);
+// (async () => {
+//   try {
+//     console.log("Connection sql ...");
+//     server = await sql.connect(sqlConfig);
 
-    console.log("Connected");
-  } catch (e) {
-    console.log(e);
-  }
-})();
+//     console.log("Connected");
+//   } catch (e) {
+//     console.log(e);
+//   }
+// })();
 
 const errorHandler = (error) => {
   console.log("Sql Error / ", error);
