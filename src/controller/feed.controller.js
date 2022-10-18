@@ -53,7 +53,7 @@ const updateFeed = catchAsync(async (req, res) => {
   // feedService.createTable(unzipedFile1, unzipedFile2);
 
   res.json({
-    success: "success",
+    status: "success",
     res: {
       downloadFile: file1 && file2 ? "success" : "error",
       extractingFile: unzipedFile1 && unzipedFile2 ? "success" : "error",
