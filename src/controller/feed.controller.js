@@ -55,10 +55,9 @@ const updateFeed = catchAsync(async (req, res) => {
   res.json({
     success: "success",
     res: {
-      downloadFile1: file1 && true,
-      downloadFile2: file2 && true,
-      unzipFile1: unzipedFile1 && true,
-      unzipFile2: unzipedFile2 && true,
+      downloadFile: file1 && file2 ? "success" : "error",
+      extractingFile: unzipedFile1 && unzipedFile2 ? "success" : "error",
+      procedureCall: "success",
     },
   });
 });
