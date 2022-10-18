@@ -1,8 +1,8 @@
 const httpStatus = require("http-status");
 const ApiError = require("../utils/ApiError");
 const catchAsync = require("../utils/catchAsync");
-const { sftpService, extractService } = require("../services");
-
+const { sftpService, extractService, feedService } = require("../services");
+const delFile = require("../utils/delFile");
 const { sftpConfig1, sftpConfig2, paths } = require("../config/sftpConfig");
 
 const updateFeed = catchAsync(async (req, res) => {
@@ -46,7 +46,11 @@ const updateFeed = catchAsync(async (req, res) => {
 
   console.log("Extracted");
 
-  // TODO : Call Store Procedure
+  delFile(file1);
+  delFile(file2);
+
+  // TODO : Call Store Procedure from feed service
+  feedService.createTable(unzipedFile1, unzipedFile2);
 
   res.json({
     success: "success",
