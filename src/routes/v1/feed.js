@@ -2,18 +2,19 @@
 
 const express = require("express");
 const logger = require("../../middleware/logger");
-const { feedController } = require("../../controller");
+const {
+  ingramFeedController,
+  scansourceFeedController,
+} = require("../../controller");
 
 const router = express.Router();
 
 router.use(logger);
 
-// router.route("/").get();
+router.route("/ingram/update").get(ingramFeedController.updateFeedIngram);
 
-router.route("/update").get(feedController.updateFeed);
-
-router.param("listenToThisVar", (req, res, next, value) => {
-  next();
-});
+router
+  .route("/scansource/update")
+  .get(scansourceFeedController.updateFeedScansource);
 
 module.exports = router;

@@ -5,7 +5,7 @@ const { sftpService, extractService, feedService } = require("../services");
 const delFile = require("../utils/delFile");
 const { sftpConfig1, sftpConfig2, paths } = require("../config/sftpConfig");
 
-const updateFeed = catchAsync(async (req, res) => {
+const updateFeedIngram = catchAsync(async (req, res) => {
   const file1 = await sftpService.downloadFile(
     sftpConfig1.config,
     sftpConfig1.fileName,
@@ -63,5 +63,5 @@ const updateFeed = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  updateFeed,
+  updateFeedIngram,
 };

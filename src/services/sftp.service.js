@@ -16,7 +16,7 @@ const downloadFile = async (sftpConfig, fileName, targetPath) => {
       .connect(sftpConfig)
       .then(async () => {
         try {
-          await sftp.get(fileName, targetPathFull);
+          await sftp.fastGet(fileName, targetPathFull);
           console.log("downloaded");
           sftp.end();
 
@@ -32,16 +32,3 @@ const downloadFile = async (sftpConfig, fileName, targetPath) => {
 };
 
 module.exports = { downloadFile };
-
-// const listFiles = async () => {
-//   if (sftp) {
-//     sftp
-//       .list(`/`)
-//       .then((data) => {
-//         const file = data.find((i) => i.name === FILE_NAME_1);
-
-//         console.log(file);
-//       })
-//       .catch((e) => console.log(e.message));
-//   }
-// };
