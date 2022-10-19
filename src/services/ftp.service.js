@@ -19,11 +19,12 @@ const downloadFile = async (ftpConfig, fileName, targetPath) => {
     await client.downloadTo(targetPathFull, fileName);
 
     console.log("downloaded");
+
+    client.close();
+    return targetPathFull;
   } catch (err) {
     throw err;
   }
-
-  client.close();
 };
 
 module.exports = { downloadFile };
