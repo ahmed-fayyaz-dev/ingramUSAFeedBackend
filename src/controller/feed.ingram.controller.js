@@ -49,17 +49,26 @@ const updateFeedIngram = catchAsync(async (req, res) => {
   delFile(file1);
   delFile(file2);
 
-  // TODO : Call Store Procedure from feed service
-  // feedService.createTable(unzipedFile1, unzipedFile2);
+  // try {
+  let result = await feedService.executeSpgetprocessIngram(req.app.locals.db);
 
-  res.json({
+  console.log("CONTROLLER");
+  console.dir(result);
+
+  res.status(httpStatus.OK).json({
     status: "success",
     res: {
       downloadFile: file1 && file2 ? "success" : "error",
       extractingFile: unzipedFile1 && unzipedFile2 ? "success" : "error",
-      procedureCall: "success",
+      procedureCall: result ? "success" : "error",
     },
   });
+  // } catch (err) {
+  //   if (err) {
+  //     console.error(err);
+  //     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "SERVER ERROR");
+  //   }
+  // }
 });
 
 module.exports = {

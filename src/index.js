@@ -5,27 +5,40 @@ const sql = require("mssql");
 const config = require("./config/config");
 const sqlConfig = require("./config/sqlConfig");
 
+const appPool = new sql.ConnectionPool(sqlConfig);
+
 let server;
 
-// (async () => {
-//   try {
-//     console.log("Connection sql ...");
-//     server = await sql.connect(sqlConfig);
+//connect the pool and start the web server when done
+(async () => {
+  try {
+    console.log("Connection sql ...");
 
-//     console.log("Connected");
-//   } catch (e) {
-//     console.log(e);
-//   }
-// })();
+    let pool = await appPool.connect();
+
+    app.locals.db = pool;
+
+    server = app.listen(config.port);
+
+    console.log("Connected");
+  } catch (err) {
+    console.error("Error creating connection pool", err);
+  }
+})();
 
 const errorHandler = (error) => {
   console.log("Sql Error / ", error);
-  exitHandler();
+  if (appPool) appPool.close();
 };
 
 const exitHandler = () => {
   if (server) {
-    server.close;
+    server.close(() => {
+      console.log("Server closed");
+      process.exit(1);
+    });
+  } else {
+    process.exit(1);
   }
 };
 
@@ -43,5 +56,3 @@ process.on("SIGTERM", () => {
   console.log("SIGTERM Recieved");
   exitHandler();
 });
-
-app.listen(config.port);

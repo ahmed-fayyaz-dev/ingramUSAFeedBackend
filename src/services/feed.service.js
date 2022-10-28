@@ -1,22 +1,23 @@
-const sql = require("mssql");
+const executeSpgetprocessIngram = async (db) => {
+  return await db
+    .request()
+    .execute("SpgetprocessIngram", async function (err, recordset) {
+      if (err) {
+        throw err;
+      }
 
-const request = new sql.Request();
-
-const table = new sql.Table("test_table"); // or temporary table, e.g. #temptable
-table.create = true;
-table.columns.add("a", sql.Int, { nullable: true, primary: true });
-table.columns.add("b", sql.VarChar(50), { nullable: false });
-table.rows.add(777, "test");
+      console.dir(recordset);
+      return recordset;
+    });
+};
 
 const createTable = () => {
-  request.bulk(table, (err, result) => {
+  request.bulk((err, result) => {
     // ... error checks
   });
 };
 
-const extractAndMergeTable = (file1, file2) => {};
-
 module.exports = {
   createTable,
-  extractAndMergeTable,
+  executeSpgetprocessIngram,
 };
