@@ -15,12 +15,12 @@ let server;
     console.log("Connection sql ...");
 
     let pool = await appPool.connect();
+    console.log("Connected");
 
     app.locals.db = pool;
 
     server = app.listen(config.port);
-
-    console.log("Connected");
+    console.log("Server Hosted");
   } catch (err) {
     console.error("Error creating connection pool", err);
   }

@@ -49,27 +49,37 @@ const updateFeedIngram = catchAsync(async (req, res) => {
   delFile(file1);
   delFile(file2);
 
-  // try {
-  let result = await feedService.executeSpgetprocessIngram(req.app.locals.db);
+  // let result = await feedService.executeSpgetprocessIngram(req.app.locals.db);
 
-  console.log("CONTROLLER");
-  console.dir(result);
+  req.app.locals.db
+    .request()
+    .execute("SpgetprocessIngram", function (err, recordset) {
+      if (err) {
+        throw err;
+      }
 
-  res.status(httpStatus.OK).json({
+      res.status(httpStatus.OK).json(
+        returnVal({
+          file1,
+          file2,
+          unzipedFile1,
+          unzipedFile2,
+          result: recordset?.recordset[0]?.R_Status,
+        })
+      );
+    });
+});
+
+const returnVal = ({ file1, file2, unzipedFile1, unzipedFile2, result }) => {
+  return {
     status: "success",
     res: {
       downloadFile: file1 && file2 ? "success" : "error",
       extractingFile: unzipedFile1 && unzipedFile2 ? "success" : "error",
-      procedureCall: result ? "success" : "error",
+      procedureCall: result === "Done" ? "success" : "error",
     },
-  });
-  // } catch (err) {
-  //   if (err) {
-  //     console.error(err);
-  //     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "SERVER ERROR");
-  //   }
-  // }
-});
+  };
+};
 
 module.exports = {
   updateFeedIngram,

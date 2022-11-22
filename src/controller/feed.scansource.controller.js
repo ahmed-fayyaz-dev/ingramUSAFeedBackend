@@ -21,14 +21,31 @@ const updateFeedScansource = catchAsync(async (req, res) => {
   // TODO : Call Store Procedure from feed service
   // feedService.createTable(unzipedFile1, unzipedFile2);
 
-  res.json({
+  req.app.locals.db
+    .request()
+    .execute("SpgetprocessScanSource", function (err, recordset) {
+      if (err) {
+        throw err;
+      }
+
+      res.status(httpStatus.OK).json(
+        returnVal({
+          file1,
+          result: recordset?.recordset[0]?.R_Status,
+        })
+      );
+    });
+});
+
+const returnVal = ({ file1, result }) => {
+  return {
     status: "success",
     res: {
       downloadFile: file1 ? "success" : "error",
-      procedureCall: "NA",
+      procedureCall: result === "Done" ? "success" : "error",
     },
-  });
-});
+  };
+};
 
 module.exports = {
   updateFeedScansource,
