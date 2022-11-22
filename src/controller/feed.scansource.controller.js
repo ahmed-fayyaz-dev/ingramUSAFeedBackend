@@ -25,7 +25,10 @@ const updateFeedScansource = catchAsync(async (req, res) => {
     .request()
     .execute("SpgetprocessScanSource", function (err, recordset) {
       if (err) {
-        throw err;
+        throw new ApiError(
+          httpStatus.EXPECTATION_FAILED,
+          "Store Procedure Failed"
+        );
       }
 
       res.status(httpStatus.OK).json(
