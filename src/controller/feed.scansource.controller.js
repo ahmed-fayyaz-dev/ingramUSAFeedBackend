@@ -16,8 +16,6 @@ const updateFeedScansource = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.NOT_FOUND, "File1 not found");
   }
 
-  //   delFile(file1);
-
   // TODO : Call Store Procedure from feed service
   // feedService.createTable(unzipedFile1, unzipedFile2);
 
@@ -25,12 +23,16 @@ const updateFeedScansource = catchAsync(async (req, res) => {
     .request()
     .execute("SpgetprocessScanSource", function (err, recordset) {
       if (err) {
+        res.status(httpStatus.EXPECTATION_FAILED).json({
+          status: "error",
+          message: "Store Procedure Failed",
+        });
+
         throw new ApiError(
           httpStatus.EXPECTATION_FAILED,
           "Store Procedure Failed"
         );
       }
-
       res.status(httpStatus.OK).json(
         returnVal({
           file1,
@@ -45,7 +47,7 @@ const returnVal = ({ file1, result }) => {
     status: "success",
     res: {
       downloadFile: file1 ? "success" : "error",
-      procedureCall: result === "Done" ? "success" : "error",
+      procedureCall: result,
     },
   };
 };

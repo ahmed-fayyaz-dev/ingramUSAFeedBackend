@@ -55,6 +55,11 @@ const updateFeedIngram = catchAsync(async (req, res) => {
     .request()
     .execute("SpgetprocessIngram", function (err, recordset) {
       if (err) {
+        res.status(httpStatus.EXPECTATION_FAILED).json({
+          status: "error",
+          message: "Store Procedure Failed",
+        });
+
         throw new ApiError(
           httpStatus.EXPECTATION_FAILED,
           "Store Procedure Failed"
@@ -79,7 +84,7 @@ const returnVal = ({ file1, file2, unzipedFile1, unzipedFile2, result }) => {
     res: {
       downloadFile: file1 && file2 ? "success" : "error",
       extractingFile: unzipedFile1 && unzipedFile2 ? "success" : "error",
-      procedureCall: result === "Done" ? "success" : "error",
+      procedureCall: result,
     },
   };
 };
