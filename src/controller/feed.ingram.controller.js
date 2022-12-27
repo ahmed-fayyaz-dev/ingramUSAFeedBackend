@@ -58,6 +58,7 @@ const updateFeedIngram = catchAsync(async (req, res) => {
         res.status(httpStatus.EXPECTATION_FAILED).json({
           status: "error",
           message: "Store Procedure Failed",
+          error: err,
         });
 
         throw new ApiError(

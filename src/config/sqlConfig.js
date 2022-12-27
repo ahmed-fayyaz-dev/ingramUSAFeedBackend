@@ -7,7 +7,7 @@ const sqlConfig = {
   pool: {
     max: 10,
     min: 0,
-    idleTimeoutMillis: 30000,
+    idleTimeoutMillis: 600000,
   },
   options: {
     enableArithAbort: true,
@@ -15,7 +15,8 @@ const sqlConfig = {
     // trustedConnection: true,
     // encrypt: true, // for azure
   },
-  connectionTimeout: 150000,
+  connectionTimeout: 900000,
+  requestTimeout: 600000,
 };
 
 // const sqlConfig = {
