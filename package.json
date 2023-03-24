@@ -17,6 +17,7 @@
     "extract-zip": "^2.0.1",
     "http-status": "^1.5.3",
     "mssql": "^9.0.1",
+    "node-cron": "^3.0.2",
     "ssh2-sftp-client": "^9.0.4",
     "swagger-ui-express": "^4.5.0"
   },

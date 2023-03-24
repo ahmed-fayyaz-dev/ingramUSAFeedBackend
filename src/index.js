@@ -4,6 +4,7 @@ const app = require("./app");
 const sql = require("mssql");
 const config = require("./config/config");
 const sqlConfig = require("./config/sqlConfig");
+const { ingramCronJob } = require("./jobs");
 
 const appPool = new sql.ConnectionPool(sqlConfig);
 
@@ -18,6 +19,7 @@ let server;
     console.log("Connected");
 
     app.locals.db = pool;
+    ingramCronJob.initIngramFeedCronJob(pool);
 
     server = app.listen(config.port);
     console.log("Server Hosted");
